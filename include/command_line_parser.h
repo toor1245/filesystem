@@ -1,0 +1,6 @@
+#ifndef FILESYSTEM_COMMAND_LINE_PARSER_H
+#define FILESYSTEM_COMMAND_LINE_PARSER_H
+
+_Noreturn void command_line_run();
+
+#endif // FILESYSTEM_COMMAND_LINE_PARSER_H

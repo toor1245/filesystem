@@ -1,3 +1,13 @@
-# Project exclude paths
-/cmake-build-debug/
-/cmake-build-debug-mingw/
+# Build folders
+build/
+cmake_build/
+build_cross/
+cmake-build-*/
+out/
+
+# IDEs / CI temp files
+.idea/
+.vagrant/
+.vscode/
+.vs/
+*.swp

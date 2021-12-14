@@ -1,0 +1,12 @@
+#ifndef FILESYSTEM_FILESYSTEM_MACROS_H
+#define FILESYSTEM_FILESYSTEM_MACROS_H
+
+#define FS_BYTES_PER_BITMAP_BIT 16
+#define FS_BYTES_PER_BITMAP_BYTE 128
+#define FS_MAX_NUM_DESCRIPTORS 5 // Max number of files
+
+#if defined(__clang__)
+#define FS_COMPILER_CLANG
+#endif
+
+#endif //FILESYSTEM_FILESYSTEM_MACROS_H
