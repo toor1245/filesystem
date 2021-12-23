@@ -6,7 +6,8 @@
 
 typedef enum {
   FS_FILE,
-  FS_DIRECTORY
+  FS_DIRECTORY,
+  FS_SYMLINK
 } fs_type_t;
 
 typedef struct {

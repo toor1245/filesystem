@@ -26,6 +26,7 @@ void array_list_set_capacity(array_list_t *array_list, uint32_t value) {
       uint32_t *new_array = malloc(sizeof(uint32_t) * value);
       if (array_list->size > 0) {
         memmove(&new_array[0], &array_list->array[0], sizeof(uint32_t) * array_list->size);
+        //free(array_list->array);
       }
       array_list->array = new_array;
       array_list->length = value;
@@ -62,4 +63,9 @@ void array_list_remove_at(array_list_t *array_list, uint32_t index) {
     memmove(&array_list->array[index], &array_list->array[src_index], sizeof(uint32_t) * (array_list->size - index));
   }
   array_list->array[array_list->size] = 0;
+}
+
+void array_list_free(array_list_t *array_list) {
+  free(array_list->array);
+  free(array_list);
 }

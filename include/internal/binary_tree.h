@@ -2,7 +2,7 @@
 #define FILESYSTEM_BINARY_TREE_H
 
 typedef struct tree_node {
-  char* name;
+  char *name;
   uint32_t value;
   uint32_t index;
   uint32_t num_reserved_bits;

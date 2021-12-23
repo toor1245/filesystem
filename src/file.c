@@ -17,19 +17,10 @@ file_t *file_new(char *name, bool link) {
   file->is_link = link;
   file->open_ids = array_list_new();
   file->fd = NULL;
+  file->parent_dir = NULL;
+  file->content = 0;
+  file->is_opened = false;
   return file;
-}
-
-file_t *file_find(linked_list_t *linked_list, int fd) {
-  node_t *current = linked_list->head;
-  while (current) {
-    file_t *file = (file_t *) current->value;
-    if (file->fd && fd == file->fd->id) {
-      return file;
-    }
-    current = current->next;
-  }
-  return NULL;
 }
 
 file_t *linked_list_file_find_by_name(linked_list_t *linked_list, char *name) {

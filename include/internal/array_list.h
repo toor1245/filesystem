@@ -12,6 +12,8 @@ typedef struct {
 
 array_list_t *array_list_new();
 
+void array_list_free(array_list_t *array_list);
+
 void array_list_push(array_list_t *array_list, uint32_t item);
 
 int array_list_index_of(array_list_t *array_list, uint32_t item);

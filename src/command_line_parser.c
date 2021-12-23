@@ -7,7 +7,7 @@
 #include "filesystem.h"
 #include "command_line_parser.h"
 
-#define COMMAND_LINE_MAX_NUM_ARG 3
+#define COMMAND_LINE_MAX_NUM_ARG 20
 #define COMMAND_LINE_MAX_TEXT_SIZE 50
 #define COMMAND_LINE_DELIM_WHITESPACE " "
 
@@ -127,9 +127,17 @@ inline static bool command_line_check(command_line_t *cl, const char *command, i
 #define COMMAND_LINE_IS_UNLINK(cl)    command_line_check((cl), "unlink", 1) && command_line_arg_is_str(cl, 1)
 #define COMMAND_LINE_IS_OPEN(cl)      command_line_check((cl), "open", 1) && command_line_arg_is_str(cl, 1)
 #define COMMAND_LINE_IS_CLOSE(cl)     command_line_check((cl), "close", 1) && command_line_arg_is_int(cl, 1)
+#define COMMAND_LINE_IS_CD(cl)        command_line_check((cl), "cd", 1) && command_line_arg_is_str(cl, 1)
+#define COMMAND_LINE_IS_MKDIR(cl)     command_line_check((cl), "mkdir", 1) && command_line_arg_is_str(cl, 1)
+#define COMMAND_LINE_IS_RMDIR(cl)     command_line_check((cl), "rmdir", 1) && command_line_arg_is_str(cl, 1)
 
 #define COMMAND_LINE_IS_LINK(cl)          \
   command_line_check((cl), "link", 2) &&  \
+  command_line_arg_is_str(cl, 1)      &&  \
+  command_line_arg_is_str(cl, 2)
+
+#define COMMAND_LINE_IS_SYMLINK(cl)          \
+  command_line_check((cl), "symlink", 2) &&  \
   command_line_arg_is_str(cl, 1)      &&  \
   command_line_arg_is_str(cl, 2)
 
@@ -207,20 +215,41 @@ static void command_line_execute(command_line_t *cl) {
     return;
   }
   if (COMMAND_LINE_IS_LINK(cl)) {
-    char *name1 = command_line_arg_str(cl, 1);
-    char *name2 = command_line_arg_str(cl, 2);
-    fs_link(name1, name2);
+    char *path1 = command_line_arg_str(cl, 1);
+    char *path2 = command_line_arg_str(cl, 2);
+    fs_link(path1, path2);
     return;
   }
   if (COMMAND_LINE_IS_UNLINK(cl)) {
-    char *name1 = command_line_arg_str(cl, 1);
-    fs_unlink(name1);
+    char *path1 = command_line_arg_str(cl, 1);
+    fs_unlink(path1);
     return;
   }
   if (COMMAND_LINE_IS_TRUNCATE(cl)) {
-    char *name = command_line_arg_str(cl, 1);
+    char *path = command_line_arg_str(cl, 1);
     uint32_t size = command_line_arg_int(cl, 2);
-    fs_truncate(name, size);
+    fs_truncate(path, size);
+    return;
+  }
+  if (COMMAND_LINE_IS_CD(cl)) {
+    char *path = command_line_arg_str(cl, 1);
+    fs_cd(path);
+    return;
+  }
+  if (COMMAND_LINE_IS_MKDIR(cl)) {
+    char *path = command_line_arg_str(cl, 1);
+    fs_mkdir(path);
+    return;
+  }
+  if (COMMAND_LINE_IS_RMDIR(cl)) {
+    char *path = command_line_arg_str(cl, 1);
+    fs_rmdir(path);
+    return;
+  }
+  if (COMMAND_LINE_IS_SYMLINK(cl)) {
+    char *str = command_line_arg_str(cl, 1);
+    char *path = command_line_arg_str(cl, 2);
+    fs_symlink(str, path);
     return;
   }
 }
